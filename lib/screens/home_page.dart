@@ -1,5 +1,38 @@
 import 'package:flutter/material.dart';
 
+const _menusDuJour = <_MenuDuJour>[
+  _MenuDuJour(
+    id: 1,
+    titre: 'Petit déjeuner',
+    description: 'Lait, céréales et fruits',
+    icone: '🥣',
+  ),
+  _MenuDuJour(
+    id: 2,
+    titre: 'Déjeuner',
+    description: 'Poulet, riz et légumes',
+    icone: '🍲',
+  ),
+  _MenuDuJour(
+    id: 3,
+    titre: 'Goûter',
+    description: 'Biscuit et compote de pomme',
+    icone: '🍪',
+  ),
+  _MenuDuJour(
+    id: 4,
+    titre: 'Jus de fruits',
+    description: "Jus d'orange naturel",
+    icone: '🍊',
+  ),
+  _MenuDuJour(
+    id: 5,
+    titre: 'Fruits frais',
+    description: 'Une sélection de fruits de saison',
+    icone: '🍎',
+  ),
+];
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -55,7 +88,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: const Padding(
+      body: Padding(
         padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,8 +99,25 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(height: 16),
             Expanded(
-              child: Center(
-                child: Text('Les menus du jour seront affichés ici.'),
+              child: ListView.separated(
+                itemCount: _menusDuJour.length,
+                separatorBuilder: (context, index) => const SizedBox(height: 8),
+                itemBuilder: (context, index) {
+                  final menu = _menusDuJour[index];
+                  return Card(
+                    key: ValueKey(menu.id),
+                    color: const Color(0xFFFFF8EF),
+                    child: ListTile(
+                      leading: Text(
+                        menu.icone,
+                        style: const TextStyle(fontSize: 28),
+                      ),
+                      title: Text(menu.titre),
+                      subtitle: Text(menu.description),
+                      onTap: () {},
+                    ),
+                  );
+                },
               ),
             ),
           ],
@@ -80,4 +130,18 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+class _MenuDuJour {
+  const _MenuDuJour({
+    required this.id,
+    required this.titre,
+    required this.description,
+    required this.icone,
+  });
+
+  final int id;
+  final String titre;
+  final String description;
+  final String icone;
 }

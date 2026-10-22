@@ -33,6 +33,15 @@ void main() {
     expect(find.byIcon(Icons.search), findsOneWidget);
     expect(find.byIcon(Icons.notifications_outlined), findsOneWidget);
     expect(find.byIcon(Icons.add), findsOneWidget);
+    expect(find.text('Petit déjeuner'), findsOneWidget);
+    expect(find.text('Déjeuner'), findsOneWidget);
+    expect(find.text('Goûter'), findsOneWidget);
+    expect(find.text('🍊'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.text('Une sélection de fruits de saison'),
+      250,
+    );
+    expect(find.text('Fruits frais'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.menu));
     await tester.pumpAndSettle();
