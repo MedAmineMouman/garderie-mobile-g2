@@ -29,6 +29,15 @@ void main() {
     await tester.pump(const Duration(seconds: 3));
     await tester.pumpAndSettle();
 
-    expect(find.text('Page principale'), findsOneWidget);
+    expect(find.text('Menus du jour'), findsOneWidget);
+    expect(find.byIcon(Icons.search), findsOneWidget);
+    expect(find.byIcon(Icons.notifications_outlined), findsOneWidget);
+    expect(find.byIcon(Icons.add), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.menu));
+    await tester.pumpAndSettle();
+    expect(find.text('Accueil'), findsOneWidget);
+    expect(find.text('Menus'), findsOneWidget);
+    expect(find.text('À propos'), findsOneWidget);
   });
 }
