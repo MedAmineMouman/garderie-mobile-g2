@@ -44,12 +44,12 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             tooltip: 'Recherche',
-            onPressed: () {},
+            onPressed: () => _showMessage(context, 'Rechercher un menu'),
             icon: const Icon(Icons.search),
           ),
           IconButton(
             tooltip: 'Notifications',
-            onPressed: () {},
+            onPressed: () => _showMessage(context, 'Aucune notification'),
             icon: const Icon(Icons.notifications_outlined),
           ),
         ],
@@ -72,17 +72,17 @@ class HomePage extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.home_outlined),
                 title: const Text('Accueil'),
-                onTap: () => Navigator.pop(context),
+                onTap: () => _selectDrawerItem(context, 'Accueil'),
               ),
               ListTile(
                 leading: const Icon(Icons.restaurant_menu),
                 title: const Text('Menus'),
-                onTap: () => Navigator.pop(context),
+                onTap: () => _selectDrawerItem(context, 'Menus'),
               ),
               ListTile(
                 leading: const Icon(Icons.info_outline),
                 title: const Text('À propos'),
-                onTap: () => Navigator.pop(context),
+                onTap: () => _selectDrawerItem(context, 'À propos'),
               ),
             ],
           ),
@@ -114,7 +114,7 @@ class HomePage extends StatelessWidget {
                       ),
                       title: Text(menu.titre),
                       subtitle: Text(menu.description),
-                      onTap: () {},
+                      onTap: () => _showMessage(context, menu.titre),
                     ),
                   );
                 },
@@ -125,10 +125,22 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Ajouter un menu',
-        onPressed: () {},
+        onPressed: () => _showMessage(context, 'Ajouter un menu'),
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  void _selectDrawerItem(BuildContext context, String label) {
+    Navigator.pop(context);
+    _showMessage(context, label);
+  }
+
+  void _showMessage(BuildContext context, String message) {
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.hideCurrentSnackBar();
+    messenger.clearSnackBars();
+    messenger.showSnackBar(SnackBar(content: Text(message)));
   }
 }
 

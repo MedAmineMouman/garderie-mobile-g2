@@ -49,4 +49,42 @@ void main() {
     expect(find.text('Menus'), findsOneWidget);
     expect(find.text('À propos'), findsOneWidget);
   });
+
+  testWidgets('Home page actions and drawer show their selected messages', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MaGarderieApp());
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Recherche'));
+    await tester.pumpAndSettle();
+    expect(find.text('Rechercher un menu'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Notifications'));
+    await tester.pumpAndSettle();
+    expect(find.text('Aucune notification'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Ajouter un menu'));
+    await tester.pumpAndSettle();
+    expect(find.text('Ajouter un menu'), findsOneWidget);
+
+    await tester.tap(find.text('Petit déjeuner'));
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(
+        of: find.byType(SnackBar),
+        matching: find.text('Petit déjeuner'),
+      ),
+      findsOneWidget,
+    );
+
+    for (final label in ['Accueil', 'Menus', 'À propos']) {
+      await tester.tap(find.byIcon(Icons.menu));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(label));
+      await tester.pumpAndSettle();
+      expect(find.text(label), findsOneWidget);
+    }
+  });
 }
